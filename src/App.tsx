@@ -1,0 +1,543 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import { Instagram, Menu, X, Moon, Sun } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
+
+// --- Components ---
+
+function Layout({ children, toggleDarkMode, isDarkMode }: { children: React.ReactNode, toggleDarkMode: () => void, isDarkMode: boolean }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+
+  const navLinks = [
+    { name: "Home", href: "/" },
+    { name: "Gallery", href: "/gallery" },
+    { name: "Services", href: "/services" },
+    { name: "Contact", href: "/contact" },
+  ];
+
+  return (
+    <div className="bg-stone-50 dark:bg-stone-900 text-stone-800 dark:text-stone-100 font-sans antialiased min-h-screen transition-colors duration-300">
+      {/* Navigation */}
+      <nav className="bg-white dark:bg-stone-950 shadow-sm sticky top-0 z-50 transition-colors duration-300">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-20 items-center">
+            <Link to="/" className="flex items-center">
+              <img
+                src="logo.png"
+                alt="Nails by Kaela"
+                className="h-10 md:h-14 w-auto object-contain"
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                  const fallback = e.currentTarget.parentElement?.querySelector(".logo-fallback");
+                  if (fallback) (fallback as HTMLElement).style.display = "block";
+                }}
+              />
+              <div className="logo-fallback hidden uppercase tracking-[0.2em] text-lg md:text-xl font-light text-black dark:text-white">
+                Nails by Kaela
+              </div>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex space-x-8 items-center">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className={`uppercase tracking-widest text-xs font-medium transition ${
+                    location.pathname === link.href
+                      ? "text-black dark:text-white border-b border-black dark:border-white"
+                      : "text-stone-500 dark:text-stone-400 hover:text-black dark:hover:text-white"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <button
+                onClick={toggleDarkMode}
+                className="p-2 rounded-full hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                aria-label="Toggle dark mode"
+              >
+                {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden flex items-center space-x-4">
+              <button
+                onClick={toggleDarkMode}
+                className="p-2 rounded-full hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                aria-label="Toggle dark mode"
+              >
+                {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-stone-600 dark:text-stone-400 hover:text-black dark:hover:text-white p-2 transition"
+                aria-label="Toggle menu"
+              >
+                {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Navigation Menu */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden bg-white dark:bg-stone-950 border-t border-stone-100 dark:border-stone-800 overflow-hidden"
+            >
+              <div className="px-4 py-6 space-y-4">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`block uppercase tracking-widest text-sm font-medium transition ${
+                      location.pathname === link.href
+                        ? "text-black dark:text-white"
+                        : "text-stone-500 dark:text-stone-400 hover:text-black dark:hover:text-white"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+
+      <main>{children}</main>
+
+      {/* Footer */}
+      <footer className="bg-black text-white py-20">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-lg md:text-xl uppercase tracking-[0.2em] font-light mb-8">
+            Let's Create Beautiful Nails
+          </h2>
+          <p className="mb-10 opacity-90 text-stone-300 font-light text-sm md:text-base">
+            1904 E 75 S, Layton, UT 84040
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16">
+            <a
+              href="https://book.squareup.com/appointments/7gfoi8huvotqzg/location/L0A6KM278AF3H/services"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white text-black px-8 py-3 rounded-full uppercase tracking-widest text-xs font-semibold hover:bg-stone-200 transition w-full sm:w-auto text-center"
+            >
+              Book Now
+            </a>
+            <a
+              href="https://www.instagram.com/nails.bykaela/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-transparent border border-stone-700 px-8 py-3 rounded-full uppercase tracking-widest text-xs font-semibold hover:bg-stone-900 hover:border-stone-500 transition text-stone-300 w-full sm:w-auto text-center"
+            >
+              Instagram
+            </a>
+          </div>
+          <div className="pt-8 border-t border-stone-900">
+            <p className="text-[10px] md:text-xs uppercase tracking-widest opacity-40">
+              &copy; {new Date().getFullYear()} Nails by Kaela. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+// --- Pages ---
+
+function Home() {
+  return (
+    <header className="py-16 md:py-32 bg-white dark:bg-stone-900 bg-dots relative overflow-hidden min-h-[80vh] flex items-center">
+      <div className="max-w-4xl mx-auto text-center px-4 relative z-10 w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white/70 dark:bg-stone-950/70 py-16 md:py-24 px-6 md:px-10 rounded-3xl backdrop-blur-sm flex flex-col items-center shadow-sm border border-white/50 dark:border-stone-800/50"
+        >
+          <img
+            src="logo.png"
+            alt="Nails by Kaela Logo"
+            className="w-48 md:w-80 h-auto mb-10 drop-shadow-sm"
+            referrerPolicy="no-referrer"
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
+          />
+
+          <h1 className="text-3xl sm:text-4xl md:text-6xl uppercase tracking-[0.2em] font-light text-stone-900 dark:text-white mb-8 leading-tight">
+            Nails by Kaela
+          </h1>
+          <p className="text-base md:text-xl text-stone-600 dark:text-stone-300 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+            Specializing in acrylics, gels, and custom hand-painted designs. Elevating your natural beauty with precision and art.
+          </p>
+          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+            <a
+              href="https://book.squareup.com/appointments/7gfoi8huvotqzg/location/L0A6KM278AF3H/services"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-black dark:bg-white text-white dark:text-black px-10 py-4 rounded-full uppercase tracking-widest text-xs md:text-sm hover:bg-stone-800 dark:hover:bg-stone-200 transition shadow-lg inline-block"
+            >
+              Book an Appointment
+            </a>
+            <Link
+              to="/gallery"
+              className="bg-transparent border border-stone-300 dark:border-stone-700 text-stone-800 dark:text-stone-200 px-10 py-4 rounded-full uppercase tracking-widest text-xs md:text-sm hover:bg-stone-100 dark:hover:bg-stone-800 transition inline-block"
+            >
+              View Gallery
+            </Link>
+          </div>
+        </motion.div>
+      </div>
+    </header>
+  );
+}
+
+function Gallery() {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "//www.instagram.com/embed.js";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  return (
+    <section className="py-20 md:py-32 max-w-6xl mx-auto px-4">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="text-center mb-16"
+      >
+        <h2 className="text-3xl md:text-4xl uppercase tracking-[0.2em] font-light text-stone-900 dark:text-white mb-6">
+          Portfolio Gallery
+        </h2>
+        <p className="text-stone-600 dark:text-stone-400 max-w-2xl mx-auto font-light">
+          A showcase of recent work, custom designs, and artistic nail sets.
+        </p>
+      </motion.div>
+
+      <div className="flex flex-col items-center space-y-12">
+        <div className="text-center">
+          <a
+            href="https://www.instagram.com/nails.bykaela/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-stone-600 dark:text-stone-400 hover:text-black dark:hover:text-white font-medium transition inline-flex items-center gap-2 text-sm md:text-base"
+          >
+            <Instagram className="w-5 h-5" />
+            Follow @nails.bykaela on Instagram
+          </a>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl">
+          {/* Instagram Embeds */}
+          <div className="flex justify-center">
+            <blockquote
+              className="instagram-media"
+              data-instgrm-permalink="https://www.instagram.com/p/DWVSFjcD_RC/"
+              data-instgrm-version="14"
+              style={{
+                background: "#FFF",
+                border: 0,
+                borderRadius: "16px",
+                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                margin: "1px",
+                maxWidth: "540px",
+                minWidth: "280px",
+                padding: 0,
+                width: "100%",
+              }}
+            ></blockquote>
+          </div>
+          <div className="flex justify-center">
+            <blockquote
+              className="instagram-media"
+              data-instgrm-permalink="https://www.instagram.com/p/DWaUrbDl4Fq/?img_index=1"
+              data-instgrm-version="14"
+              style={{
+                background: "#FFF",
+                border: 0,
+                borderRadius: "16px",
+                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                margin: "1px",
+                maxWidth: "540px",
+                minWidth: "280px",
+                padding: 0,
+                width: "100%",
+              }}
+            ></blockquote>
+          </div>
+          <div className="flex justify-center">
+            <blockquote
+              className="instagram-media"
+              data-instgrm-permalink="https://www.instagram.com/p/DWnIq0wFBPK/?img_index=1"
+              data-instgrm-version="14"
+              style={{
+                background: "#FFF",
+                border: 0,
+                borderRadius: "16px",
+                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                margin: "1px",
+                maxWidth: "540px",
+                minWidth: "280px",
+                padding: 0,
+                width: "100%",
+              }}
+            ></blockquote>
+          </div>
+          <div className="flex justify-center">
+            <div className="w-full max-w-[540px] min-w-[280px] aspect-square bg-stone-100 dark:bg-stone-800 rounded-2xl flex items-center justify-center border-2 border-dashed border-stone-200 dark:border-stone-700">
+              <p className="text-stone-400 uppercase tracking-widest text-xs">More coming soon</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Services() {
+  const categories = [
+    {
+      name: "Manicures",
+      items: [
+        { title: "Classic Gel Manicure", desc: "Cuticle care, shaping, and solid gel polish.", price: "$45+" },
+        { title: "Structured Gel Manicure", desc: "Added strength for natural nails using builder gel.", price: "$55+" },
+        { title: "Gel-X Extensions", desc: "Full coverage soft gel extensions for instant length.", price: "$75+" },
+      ]
+    },
+    {
+      name: "Acrylics",
+      items: [
+        { title: "Acrylic Full Set", desc: "Extensions with custom length and shape.", price: "$65+" },
+        { title: "Acrylic Fill", desc: "Maintenance for existing acrylic sets (2-3 weeks).", price: "$50+" },
+        { title: "Acrylic Overlay", desc: "Acrylic applied over natural nails for strength.", price: "$55+" },
+      ]
+    },
+    {
+      name: "Art & Add-ons",
+      items: [
+        { title: "Tier 1 Nail Art", desc: "Simple designs, French tip, or chrome on 2-4 nails.", price: "$10+" },
+        { title: "Tier 2 Nail Art", desc: "Detailed hand-painted designs on all nails.", price: "$25+" },
+        { title: "Charms & Gems", desc: "3D accents, crystals, and luxury charms.", price: "$5/nail" },
+      ]
+    }
+  ];
+
+  return (
+    <section className="py-20 md:py-32 bg-white dark:bg-stone-900">
+      <div className="max-w-4xl mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl uppercase tracking-[0.2em] font-light text-stone-900 dark:text-white mb-6">
+            Services Menu
+          </h2>
+          <p className="text-stone-600 dark:text-stone-400 font-light">
+            Professional nail care and artistic designs tailored to your style.
+          </p>
+        </motion.div>
+
+        <div className="space-y-16">
+          {categories.map((cat) => (
+            <div key={cat.name}>
+              <h3 className="text-lg uppercase tracking-[0.3em] font-medium text-stone-400 dark:text-stone-500 mb-8 border-b border-stone-100 dark:border-stone-800 pb-2">
+                {cat.name}
+              </h3>
+              <div className="space-y-6">
+                {cat.items.map((service) => (
+                  <div
+                    key={service.title}
+                    className="flex flex-col sm:flex-row justify-between sm:items-center p-6 hover:bg-stone-50 dark:hover:bg-stone-950 transition rounded-2xl group"
+                  >
+                    <div className="mb-4 sm:mb-0">
+                      <h4 className="uppercase tracking-widest text-sm font-medium text-stone-800 dark:text-stone-200 group-hover:text-black dark:group-hover:text-white transition">
+                        {service.title}
+                      </h4>
+                      <p className="text-sm text-stone-500 dark:text-stone-400 font-light mt-1 max-w-md">
+                        {service.desc}
+                      </p>
+                    </div>
+                    <span className="font-medium text-black dark:text-white text-lg">{service.price}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-20 text-center">
+          <a
+            href="https://book.squareup.com/appointments/7gfoi8huvotqzg/location/L0A6KM278AF3H/services"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-black dark:bg-white text-white dark:text-black px-12 py-4 rounded-full uppercase tracking-widest text-sm font-medium hover:bg-stone-800 dark:hover:bg-stone-200 transition shadow-xl inline-block"
+          >
+            Book Your Session
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Contact() {
+  return (
+    <section className="py-20 md:py-32 max-w-5xl mx-auto px-4">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="text-center mb-16"
+      >
+        <h2 className="text-3xl md:text-4xl uppercase tracking-[0.2em] font-light text-stone-900 dark:text-white mb-6">
+          Get In Touch
+        </h2>
+        <p className="text-stone-600 dark:text-stone-400 font-light">
+          Have questions or want to discuss a custom design? I'd love to hear from you.
+        </p>
+      </motion.div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+        <div className="bg-white dark:bg-stone-950 p-10 rounded-3xl shadow-sm border border-stone-100 dark:border-stone-800">
+          <h3 className="text-xl uppercase tracking-widest font-light mb-8 text-stone-900 dark:text-white">
+            Contact Info
+          </h3>
+          <div className="space-y-8">
+            <div>
+              <p className="uppercase tracking-widest text-[10px] text-stone-400 mb-1">Location</p>
+              <a 
+                href="https://www.google.com/maps/search/?api=1&query=1904+E+75+S+Layton+UT+84040" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-stone-800 dark:text-stone-200 font-light hover:text-black dark:hover:text-white transition underline decoration-stone-300 underline-offset-4"
+              >
+                1904 E 75 S, Layton, UT 84040
+              </a>
+            </div>
+            <div>
+              <p className="uppercase tracking-widest text-[10px] text-stone-400 mb-1">Instagram</p>
+              <a
+                href="https://www.instagram.com/nails.bykaela/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-stone-800 dark:text-stone-200 font-light hover:text-black dark:hover:text-white transition"
+              >
+                @nails.bykaela
+              </a>
+            </div>
+            <div>
+              <p className="uppercase tracking-widest text-[10px] text-stone-400 mb-1">Booking</p>
+              <p className="text-stone-800 dark:text-stone-200 font-light">Exclusively through Square Appointments.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-stone-900 text-white p-10 rounded-3xl shadow-xl">
+          <h3 className="text-xl uppercase tracking-widest font-light mb-6">Policies</h3>
+          <ul className="space-y-6 text-sm font-light text-stone-300">
+            <li className="flex gap-4">
+              <span className="text-stone-500">•</span>
+              <p>Please arrive with clean nails unless a soak-off is booked.</p>
+            </li>
+            <li className="flex gap-4">
+              <span className="text-stone-500">•</span>
+              <p>Cancellations must be made at least 24 hours in advance.</p>
+            </li>
+            <li className="flex gap-4">
+              <span className="text-stone-500">•</span>
+              <p>No extra guests or children allowed in the studio.</p>
+            </li>
+            <li className="flex gap-4">
+              <span className="text-stone-500">•</span>
+              <p>A non-refundable deposit is required for all new clients.</p>
+            </li>
+          </ul>
+          <div className="mt-10">
+            <a
+              href="https://book.squareup.com/appointments/7gfoi8huvotqzg/location/L0A6KM278AF3H/services"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full bg-white text-black py-4 rounded-full uppercase tracking-widest text-xs font-semibold hover:bg-stone-200 transition text-center"
+            >
+              Book Appointment
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// --- Main App ---
+
+export default function App() {
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    // Check local storage or default to light mode
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("darkMode");
+      if (saved !== null) return saved === "true";
+      // Default to light mode as requested
+      return false;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    // Apply dark mode class to html element
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    localStorage.setItem("darkMode", isDarkMode.toString());
+  }, [isDarkMode]);
+
+  // Support for Dark Reader: Detect if it's active
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      const isDarkReaderActive = document.documentElement.hasAttribute("data-darkreader-scheme") ||
+                                document.documentElement.hasAttribute("data-darkreader-mode");
+      if (isDarkReaderActive) {
+        // If Dark Reader is active, we might want to disable our own toggle or sync with it
+        // For now, we just ensure our classes don't conflict
+      }
+    });
+
+    observer.observe(document.documentElement, { attributes: true });
+    return () => observer.disconnect();
+  }, []);
+
+  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
+
+  return (
+    <BrowserRouter>
+      <Layout toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
+  );
+}

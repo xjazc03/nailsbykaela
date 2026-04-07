@@ -1,0 +1,37 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap');
+
+@theme {
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  :root {
+    --bg-stone-50: #fafaf9;
+    --text-stone-800: #292524;
+    --text-stone-600: #57534e;
+    --border-stone-200: #e7e5e4;
+  }
+
+  .dark {
+    --bg-stone-50: #1c1917;
+    --text-stone-800: #f5f5f4;
+    --text-stone-600: #a8a29e;
+    --border-stone-200: #44403c;
+  }
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Subtle dotted pattern matching the logo */
+.bg-dots {
+  background-image: radial-gradient(#d6d3d1 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.dark .bg-dots {
+  background-image: radial-gradient(#44403c 1px, transparent 1px);
+}
