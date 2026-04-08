@@ -8,6 +8,16 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 
+declare global {
+  interface Window {
+    instgrm?: {
+      Embeds: {
+        process: () => void;
+      };
+    };
+  }
+}
+
 // --- Components ---
 
 function Layout({ children }: { children: React.ReactNode }) {
@@ -191,13 +201,24 @@ function Home() {
 
 function Gallery() {
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "//www.instagram.com/embed.js";
-    script.async = true;
-    document.body.appendChild(script);
-    return () => {
-      document.body.removeChild(script);
+    const processEmbeds = () => {
+      if (window.instgrm) {
+        window.instgrm.Embeds.process();
+      }
     };
+
+    // Check if script already exists
+    if (!document.getElementById("instagram-embed-script")) {
+      const script = document.createElement("script");
+      script.id = "instagram-embed-script";
+      script.src = "//www.instagram.com/embed.js";
+      script.async = true;
+      script.onload = processEmbeds;
+      document.body.appendChild(script);
+    } else {
+      // If script exists, just process the new elements
+      processEmbeds();
+    }
   }, []);
 
   return (
