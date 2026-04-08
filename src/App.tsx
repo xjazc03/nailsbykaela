@@ -127,7 +127,7 @@ function Layout({ children, toggleDarkMode, isDarkMode }: { children: React.Reac
             Let's Create Beautiful Nails
           </h2>
           <p className="mb-10 opacity-90 text-stone-300 font-light text-sm md:text-base">
-            1904 E 75 S, Layton, UT 84040
+            Located in the heart of Layton.
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16">
             <a
@@ -430,7 +430,7 @@ function Contact() {
                 rel="noopener noreferrer"
                 className="text-stone-800 dark:text-stone-200 font-light hover:text-black dark:hover:text-white transition underline decoration-stone-300 underline-offset-4"
               >
-                1904 E 75 S, Layton, UT 84040
+                Located in the heart of Layton.
               </a>
             </div>
             <div>
