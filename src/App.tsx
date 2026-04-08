@@ -7,6 +7,7 @@ import { Instagram, Menu, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
+import logo from "./assets/logo.png";
 
 // --- Components ---
 
@@ -29,7 +30,7 @@ function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex justify-between h-20 items-center">
             <Link to="/" className="flex items-center">
               <img
-                src="logo.png"
+                src={logo}
                 alt="Nails by Kaela"
                 className="h-10 md:h-14 w-auto object-contain"
                 referrerPolicy="no-referrer"
@@ -156,7 +157,7 @@ function Home() {
           className="bg-white/70 py-16 md:py-24 px-6 md:px-10 rounded-3xl backdrop-blur-sm flex flex-col items-center shadow-sm border border-white/50"
         >
           <img
-            src="logo.png"
+            src={logo}
             alt="Nails by Kaela Logo"
             className="w-48 md:w-80 h-auto mb-10 drop-shadow-sm"
             referrerPolicy="no-referrer"
