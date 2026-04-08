@@ -7,14 +7,49 @@
   
   --color-boho-cream: #fdfbf7;
   --color-boho-sand: #f5f2ed;
-  --color-boho-clay: #a0522d;
-  --color-boho-sage: #5A5A40;
+  --color-boho-clay: #8b4513; /* Darker for better readability */
+  --color-boho-sage: #4a4a34; /* Darker for better readability */
   --color-boho-ink: #1a1a1a;
 }
 
 @layer base {
   body {
-    @apply bg-boho-sand text-boho-ink font-sans antialiased selection:bg-boho-clay/20;
+    @apply bg-white text-boho-ink font-sans antialiased selection:bg-boho-clay/20 relative;
+  }
+  
+  /* Side patterns container */
+  .side-patterns {
+    position: fixed;
+    inset: 0;
+    z-index: -1; /* Move behind everything */
+    pointer-events: none;
+  }
+
+  .side-patterns::before,
+  .side-patterns::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 60px; /* Narrower on mobile */
+    opacity: 0.05;
+  }
+
+  @media (min-width: 768px) {
+    .side-patterns::before,
+    .side-patterns::after {
+      width: 150px;
+    }
+  }
+
+  .side-patterns::before {
+    left: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238b4513' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .side-patterns::after {
+    right: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238b4513' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   }
   
   h1, h2, h3, h4, .serif {
@@ -32,6 +67,11 @@ html {
   background-image: radial-gradient(#a0522d 1px, transparent 1px);
   background-size: 40px 40px;
   opacity: 0.05;
+}
+
+.bg-cactus {
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='120' viewBox='0 0 100 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%234a4a34' stroke-width='1.5' stroke-linecap='round' opacity='0.06'%3E%3Cpath d='M50 100 V30 M50 65 Q35 65 35 50 M50 55 Q65 55 65 40'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 150px 180px;
 }
 
 .boho-card {
