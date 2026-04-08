@@ -7,7 +7,6 @@ import { Instagram, Menu, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
-import logo from "./assets/logo.png";
 
 // --- Components ---
 
@@ -23,24 +22,19 @@ function Layout({ children }: { children: React.ReactNode }) {
   ];
 
   return (
-    <div className="bg-stone-50 text-stone-800 font-sans antialiased min-h-screen transition-colors duration-300">
+    <div className="bg-boho-sand text-boho-ink font-sans antialiased min-h-screen transition-colors duration-300">
       {/* Navigation */}
-      <nav className="bg-white shadow-sm sticky top-0 z-50 transition-colors duration-300">
+      <nav className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 transition-colors duration-300 border-b border-boho-clay/5">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-20 items-center">
             <Link to="/" className="flex items-center">
               <img
-                src={logo}
+                src="/logo.png"
                 alt="Nails by Kaela"
                 className="h-10 md:h-14 w-auto object-contain"
                 referrerPolicy="no-referrer"
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
-                  const fallback = e.currentTarget.parentElement?.querySelector(".logo-fallback");
-                  if (fallback) (fallback as HTMLElement).style.display = "block";
-                }}
               />
-              <div className="logo-fallback hidden uppercase tracking-[0.2em] text-lg md:text-xl font-light text-black">
+              <div className="ml-3 uppercase tracking-[0.2em] text-lg md:text-xl font-serif font-light text-boho-clay hidden sm:block">
                 Nails by Kaela
               </div>
             </Link>
@@ -108,12 +102,12 @@ function Layout({ children }: { children: React.ReactNode }) {
       <main>{children}</main>
 
       {/* Footer */}
-      <footer className="bg-black text-white py-20">
+      <footer className="bg-boho-sage text-white py-20">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-lg md:text-xl uppercase tracking-[0.2em] font-light mb-8">
+          <h2 className="text-2xl md:text-3xl uppercase tracking-[0.2em] font-serif font-light mb-8">
             Let's Create Beautiful Nails
           </h2>
-          <p className="mb-10 opacity-90 text-stone-300 font-light text-sm md:text-base">
+          <p className="mb-10 text-boho-sand/80 font-light text-sm md:text-base serif italic">
             Located in the heart of Layton.
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16">
@@ -121,7 +115,7 @@ function Layout({ children }: { children: React.ReactNode }) {
               href="https://book.squareup.com/appointments/7gfoi8huvotqzg/location/L0A6KM278AF3H/services"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white text-black px-8 py-3 rounded-full uppercase tracking-widest text-xs font-semibold hover:bg-stone-200 transition w-full sm:w-auto text-center"
+              className="bg-white text-boho-sage px-10 py-3 rounded-full uppercase tracking-widest text-xs font-semibold hover:bg-boho-sand transition w-full sm:w-auto text-center"
             >
               Book Now
             </a>
@@ -129,12 +123,12 @@ function Layout({ children }: { children: React.ReactNode }) {
               href="https://www.instagram.com/nails.bykaela/"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-transparent border border-stone-700 px-8 py-3 rounded-full uppercase tracking-widest text-xs font-semibold hover:bg-stone-900 hover:border-stone-500 transition text-stone-300 w-full sm:w-auto text-center"
+              className="bg-transparent border border-white/20 px-10 py-3 rounded-full uppercase tracking-widest text-xs font-semibold hover:bg-white/10 transition text-white w-full sm:w-auto text-center"
             >
               Instagram
             </a>
           </div>
-          <div className="pt-8 border-t border-stone-900">
+          <div className="pt-8 border-t border-white/10">
             <p className="text-[10px] md:text-xs uppercase tracking-widest opacity-40">
               &copy; {new Date().getFullYear()} Nails by Kaela. All rights reserved.
             </p>
@@ -149,27 +143,25 @@ function Layout({ children }: { children: React.ReactNode }) {
 
 function Home() {
   return (
-    <header className="py-16 md:py-32 bg-white bg-dots relative overflow-hidden min-h-[80vh] flex items-center">
+    <header className="py-16 md:py-32 bg-boho-cream bg-dots relative overflow-hidden min-h-[90vh] flex items-center">
       <div className="max-w-4xl mx-auto text-center px-4 relative z-10 w-full">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white/70 py-16 md:py-24 px-6 md:px-10 rounded-3xl backdrop-blur-sm flex flex-col items-center shadow-sm border border-white/50"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          className="bg-white/40 py-16 md:py-24 px-6 md:px-10 rounded-[3rem] backdrop-blur-md flex flex-col items-center shadow-sm border border-white/60"
         >
           <img
-            src={logo}
+            src="/logo.png"
             alt="Nails by Kaela Logo"
-            className="w-48 md:w-80 h-auto mb-10 drop-shadow-sm"
+            className="w-48 md:w-80 h-auto mb-10 drop-shadow-md"
             referrerPolicy="no-referrer"
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-            }}
           />
 
-          <h1 className="text-3xl sm:text-4xl md:text-6xl uppercase tracking-[0.2em] font-light text-stone-900 mb-8 leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl uppercase tracking-[0.2em] font-serif font-light text-boho-clay mb-8 leading-tight">
             Nails by Kaela
           </h1>
-          <p className="text-base md:text-xl text-stone-600 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+          <p className="text-base md:text-xl text-boho-sage mb-10 max-w-2xl mx-auto font-light leading-relaxed serif italic">
             Specializing in acrylics, gels, and custom hand-painted designs. Elevating your natural beauty with precision and art.
           </p>
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
@@ -177,13 +169,13 @@ function Home() {
               href="https://book.squareup.com/appointments/7gfoi8huvotqzg/location/L0A6KM278AF3H/services"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-black text-white px-10 py-4 rounded-full uppercase tracking-widest text-xs md:text-sm hover:bg-stone-800 transition shadow-lg inline-block"
+              className="boho-button"
             >
-              Book an Appointment
+              Book Appointment
             </a>
             <Link
               to="/gallery"
-              className="bg-transparent border border-stone-300 text-stone-800 px-10 py-4 rounded-full uppercase tracking-widest text-xs md:text-sm hover:bg-stone-100 transition inline-block"
+              className="boho-button-outline"
             >
               View Gallery
             </Link>
@@ -212,10 +204,10 @@ function Gallery() {
         animate={{ opacity: 1 }}
         className="text-center mb-16"
       >
-        <h2 className="text-3xl md:text-4xl uppercase tracking-[0.2em] font-light text-stone-900 mb-6">
+        <h2 className="text-4xl md:text-5xl uppercase tracking-[0.2em] font-serif font-light text-boho-clay mb-6">
           Portfolio Gallery
         </h2>
-        <p className="text-stone-600 max-w-2xl mx-auto font-light">
+        <p className="text-boho-sage max-w-2xl mx-auto font-light serif italic text-lg">
           A showcase of recent work, custom designs, and artistic nail sets.
         </p>
       </motion.div>
@@ -329,17 +321,17 @@ function Services() {
   ];
 
   return (
-    <section className="py-20 md:py-32 bg-white">
+    <section className="py-20 md:py-32 bg-boho-cream/50">
       <div className="max-w-4xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl uppercase tracking-[0.2em] font-light text-stone-900 mb-6">
+          <h2 className="text-4xl md:text-5xl uppercase tracking-[0.2em] font-serif font-light text-boho-clay mb-6">
             Services Menu
           </h2>
-          <p className="text-stone-600 font-light">
+          <p className="text-boho-sage font-light serif italic text-lg">
             Professional nail care and artistic designs tailored to your style.
           </p>
         </motion.div>
@@ -347,24 +339,24 @@ function Services() {
         <div className="space-y-16">
           {categories.map((cat) => (
             <div key={cat.name}>
-              <h3 className="text-lg uppercase tracking-[0.3em] font-medium text-stone-400 mb-8 border-b border-stone-100 pb-2">
+              <h3 className="text-xl uppercase tracking-[0.3em] font-serif font-medium text-boho-clay/40 mb-8 border-b border-boho-clay/10 pb-2">
                 {cat.name}
               </h3>
               <div className="space-y-6">
                 {cat.items.map((service) => (
                   <div
                     key={service.title}
-                    className="flex flex-col sm:flex-row justify-between sm:items-center p-6 hover:bg-stone-50 transition rounded-2xl group"
+                    className="flex flex-col sm:flex-row justify-between sm:items-center p-6 hover:bg-white transition rounded-[2rem] group border border-transparent hover:border-boho-clay/5 hover:shadow-sm"
                   >
                     <div className="mb-4 sm:mb-0">
-                      <h4 className="uppercase tracking-widest text-sm font-medium text-stone-800 group-hover:text-black transition">
+                      <h4 className="uppercase tracking-widest text-sm font-medium text-boho-ink group-hover:text-boho-clay transition">
                         {service.title}
                       </h4>
-                      <p className="text-sm text-stone-500 font-light mt-1 max-w-md">
+                      <p className="text-sm text-boho-sage font-light mt-1 max-w-md">
                         {service.desc}
                       </p>
                     </div>
-                    <span className="font-medium text-black text-lg">{service.price}</span>
+                    <span className="font-serif font-medium text-boho-clay text-xl">{service.price}</span>
                   </div>
                 ))}
               </div>
@@ -395,66 +387,66 @@ function Contact() {
         animate={{ opacity: 1 }}
         className="text-center mb-16"
       >
-        <h2 className="text-3xl md:text-4xl uppercase tracking-[0.2em] font-light text-stone-900 mb-6">
+        <h2 className="text-4xl md:text-5xl uppercase tracking-[0.2em] font-serif font-light text-boho-clay mb-6">
           Get In Touch
         </h2>
-        <p className="text-stone-600 font-light">
+        <p className="text-boho-sage font-light serif italic text-lg">
           Have questions or want to discuss a custom design? I'd love to hear from you.
         </p>
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-        <div className="bg-white p-10 rounded-3xl shadow-sm border border-stone-100">
-          <h3 className="text-xl uppercase tracking-widest font-light mb-8 text-stone-900">
+        <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-boho-clay/5">
+          <h3 className="text-2xl uppercase tracking-widest font-serif font-light mb-8 text-boho-clay">
             Contact Info
           </h3>
           <div className="space-y-8">
             <div>
-              <p className="uppercase tracking-widest text-[10px] text-stone-400 mb-1">Location</p>
+              <p className="uppercase tracking-widest text-[10px] text-boho-sage mb-1 font-medium">Location</p>
               <a 
                 href="https://www.google.com/maps/search/?api=1&query=1904+E+75+S+Layton+UT+84040" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-stone-800 font-light hover:text-black transition underline decoration-stone-300 underline-offset-4"
+                className="text-boho-ink font-light hover:text-boho-clay transition underline decoration-boho-clay/20 underline-offset-4"
               >
                 Located in the heart of Layton.
               </a>
             </div>
             <div>
-              <p className="uppercase tracking-widest text-[10px] text-stone-400 mb-1">Instagram</p>
+              <p className="uppercase tracking-widest text-[10px] text-boho-sage mb-1 font-medium">Instagram</p>
               <a
                 href="https://www.instagram.com/nails.bykaela/"
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-stone-800 font-light hover:text-black transition"
+                className="text-boho-ink font-light hover:text-boho-clay transition"
               >
                 @nails.bykaela
               </a>
             </div>
             <div>
-              <p className="uppercase tracking-widest text-[10px] text-stone-400 mb-1">Booking</p>
-              <p className="text-stone-800 font-light">Exclusively through Square Appointments.</p>
+              <p className="uppercase tracking-widest text-[10px] text-boho-sage mb-1 font-medium">Booking</p>
+              <p className="text-boho-ink font-light">Exclusively through Square Appointments.</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-stone-900 text-white p-10 rounded-3xl shadow-xl">
-          <h3 className="text-xl uppercase tracking-widest font-light mb-6">Policies</h3>
-          <ul className="space-y-6 text-sm font-light text-stone-300">
+        <div className="bg-boho-sage text-white p-10 rounded-[2.5rem] shadow-xl">
+          <h3 className="text-2xl uppercase tracking-widest font-serif font-light mb-6">Policies</h3>
+          <ul className="space-y-6 text-sm font-light text-boho-sand/80">
             <li className="flex gap-4">
-              <span className="text-stone-500">•</span>
+              <span className="text-boho-clay">•</span>
               <p>Please arrive with clean nails unless a soak-off is booked.</p>
             </li>
             <li className="flex gap-4">
-              <span className="text-stone-500">•</span>
+              <span className="text-boho-clay">•</span>
               <p>Cancellations must be made at least 24 hours in advance.</p>
             </li>
             <li className="flex gap-4">
-              <span className="text-stone-500">•</span>
+              <span className="text-boho-clay">•</span>
               <p>No extra guests or children allowed in the studio.</p>
             </li>
             <li className="flex gap-4">
-              <span className="text-stone-500">•</span>
+              <span className="text-boho-clay">•</span>
               <p>A non-refundable deposit is required for all new clients.</p>
             </li>
           </ul>
@@ -463,7 +455,7 @@ function Contact() {
               href="https://book.squareup.com/appointments/7gfoi8huvotqzg/location/L0A6KM278AF3H/services"
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full bg-white text-black py-4 rounded-full uppercase tracking-widest text-xs font-semibold hover:bg-stone-200 transition text-center"
+              className="block w-full bg-white text-boho-sage py-4 rounded-full uppercase tracking-widest text-xs font-semibold hover:bg-boho-sand transition text-center"
             >
               Book Appointment
             </a>

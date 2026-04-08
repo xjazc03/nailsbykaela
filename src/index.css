@@ -1,16 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap');
 
 @theme {
   --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", serif;
+  
+  --color-boho-cream: #fdfbf7;
+  --color-boho-sand: #f5f2ed;
+  --color-boho-clay: #a0522d;
+  --color-boho-sage: #5A5A40;
+  --color-boho-ink: #1a1a1a;
 }
 
 @layer base {
-  :root {
-    --bg-stone-50: #fafaf9;
-    --text-stone-800: #292524;
-    --text-stone-600: #57534e;
-    --border-stone-200: #e7e5e4;
+  body {
+    @apply bg-boho-sand text-boho-ink font-sans antialiased selection:bg-boho-clay/20;
+  }
+  
+  h1, h2, h3, h4, .serif {
+    @apply font-serif;
   }
 }
 
@@ -21,6 +29,19 @@ html {
 
 /* Subtle dotted pattern matching the logo */
 .bg-dots {
-  background-image: radial-gradient(#d6d3d1 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-image: radial-gradient(#a0522d 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.05;
+}
+
+.boho-card {
+  @apply bg-white rounded-[2rem] shadow-sm border border-boho-clay/5;
+}
+
+.boho-button {
+  @apply bg-boho-clay text-white px-10 py-4 rounded-full uppercase tracking-widest text-xs md:text-sm hover:bg-boho-clay/90 transition shadow-lg inline-block font-medium;
+}
+
+.boho-button-outline {
+  @apply bg-transparent border border-boho-clay/30 text-boho-clay px-10 py-4 rounded-full uppercase tracking-widest text-xs md:text-sm hover:bg-boho-clay/5 transition inline-block font-medium;
 }
