@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Instagram, Menu, X, Moon, Sun } from "lucide-react";
+import { Instagram, Menu, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 
 // --- Components ---
 
-function Layout({ children, toggleDarkMode, isDarkMode }: { children: React.ReactNode, toggleDarkMode: () => void, isDarkMode: boolean }) {
+function Layout({ children }: { children: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -22,9 +22,9 @@ function Layout({ children, toggleDarkMode, isDarkMode }: { children: React.Reac
   ];
 
   return (
-    <div className="bg-stone-50 dark:bg-stone-900 text-stone-800 dark:text-stone-100 font-sans antialiased min-h-screen transition-colors duration-300">
+    <div className="bg-stone-50 text-stone-800 font-sans antialiased min-h-screen transition-colors duration-300">
       {/* Navigation */}
-      <nav className="bg-white dark:bg-stone-950 shadow-sm sticky top-0 z-50 transition-colors duration-300">
+      <nav className="bg-white shadow-sm sticky top-0 z-50 transition-colors duration-300">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-20 items-center">
             <Link to="/" className="flex items-center">
@@ -39,7 +39,7 @@ function Layout({ children, toggleDarkMode, isDarkMode }: { children: React.Reac
                   if (fallback) (fallback as HTMLElement).style.display = "block";
                 }}
               />
-              <div className="logo-fallback hidden uppercase tracking-[0.2em] text-lg md:text-xl font-light text-black dark:text-white">
+              <div className="logo-fallback hidden uppercase tracking-[0.2em] text-lg md:text-xl font-light text-black">
                 Nails by Kaela
               </div>
             </Link>
@@ -52,34 +52,20 @@ function Layout({ children, toggleDarkMode, isDarkMode }: { children: React.Reac
                   to={link.href}
                   className={`uppercase tracking-widest text-xs font-medium transition ${
                     location.pathname === link.href
-                      ? "text-black dark:text-white border-b border-black dark:border-white"
-                      : "text-stone-500 dark:text-stone-400 hover:text-black dark:hover:text-white"
+                      ? "text-black border-b border-black"
+                      : "text-stone-500 hover:text-black"
                   }`}
                 >
                   {link.name}
                 </Link>
               ))}
-              <button
-                onClick={toggleDarkMode}
-                className="p-2 rounded-full hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
-                aria-label="Toggle dark mode"
-              >
-                {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-              </button>
             </div>
 
             {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center space-x-4">
               <button
-                onClick={toggleDarkMode}
-                className="p-2 rounded-full hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
-                aria-label="Toggle dark mode"
-              >
-                {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-              </button>
-              <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-stone-600 dark:text-stone-400 hover:text-black dark:hover:text-white p-2 transition"
+                className="text-stone-600 hover:text-black p-2 transition"
                 aria-label="Toggle menu"
               >
                 {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -95,7 +81,7 @@ function Layout({ children, toggleDarkMode, isDarkMode }: { children: React.Reac
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-white dark:bg-stone-950 border-t border-stone-100 dark:border-stone-800 overflow-hidden"
+              className="md:hidden bg-white border-t border-stone-100 overflow-hidden"
             >
               <div className="px-4 py-6 space-y-4">
                 {navLinks.map((link) => (
@@ -105,8 +91,8 @@ function Layout({ children, toggleDarkMode, isDarkMode }: { children: React.Reac
                     onClick={() => setIsMenuOpen(false)}
                     className={`block uppercase tracking-widest text-sm font-medium transition ${
                       location.pathname === link.href
-                        ? "text-black dark:text-white"
-                        : "text-stone-500 dark:text-stone-400 hover:text-black dark:hover:text-white"
+                        ? "text-black"
+                        : "text-stone-500 hover:text-black"
                     }`}
                   >
                     {link.name}
@@ -162,12 +148,12 @@ function Layout({ children, toggleDarkMode, isDarkMode }: { children: React.Reac
 
 function Home() {
   return (
-    <header className="py-16 md:py-32 bg-white dark:bg-stone-900 bg-dots relative overflow-hidden min-h-[80vh] flex items-center">
+    <header className="py-16 md:py-32 bg-white bg-dots relative overflow-hidden min-h-[80vh] flex items-center">
       <div className="max-w-4xl mx-auto text-center px-4 relative z-10 w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/70 dark:bg-stone-950/70 py-16 md:py-24 px-6 md:px-10 rounded-3xl backdrop-blur-sm flex flex-col items-center shadow-sm border border-white/50 dark:border-stone-800/50"
+          className="bg-white/70 py-16 md:py-24 px-6 md:px-10 rounded-3xl backdrop-blur-sm flex flex-col items-center shadow-sm border border-white/50"
         >
           <img
             src="logo.png"
@@ -179,10 +165,10 @@ function Home() {
             }}
           />
 
-          <h1 className="text-3xl sm:text-4xl md:text-6xl uppercase tracking-[0.2em] font-light text-stone-900 dark:text-white mb-8 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl uppercase tracking-[0.2em] font-light text-stone-900 mb-8 leading-tight">
             Nails by Kaela
           </h1>
-          <p className="text-base md:text-xl text-stone-600 dark:text-stone-300 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+          <p className="text-base md:text-xl text-stone-600 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
             Specializing in acrylics, gels, and custom hand-painted designs. Elevating your natural beauty with precision and art.
           </p>
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
@@ -190,13 +176,13 @@ function Home() {
               href="https://book.squareup.com/appointments/7gfoi8huvotqzg/location/L0A6KM278AF3H/services"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-black dark:bg-white text-white dark:text-black px-10 py-4 rounded-full uppercase tracking-widest text-xs md:text-sm hover:bg-stone-800 dark:hover:bg-stone-200 transition shadow-lg inline-block"
+              className="bg-black text-white px-10 py-4 rounded-full uppercase tracking-widest text-xs md:text-sm hover:bg-stone-800 transition shadow-lg inline-block"
             >
               Book an Appointment
             </a>
             <Link
               to="/gallery"
-              className="bg-transparent border border-stone-300 dark:border-stone-700 text-stone-800 dark:text-stone-200 px-10 py-4 rounded-full uppercase tracking-widest text-xs md:text-sm hover:bg-stone-100 dark:hover:bg-stone-800 transition inline-block"
+              className="bg-transparent border border-stone-300 text-stone-800 px-10 py-4 rounded-full uppercase tracking-widest text-xs md:text-sm hover:bg-stone-100 transition inline-block"
             >
               View Gallery
             </Link>
@@ -225,10 +211,10 @@ function Gallery() {
         animate={{ opacity: 1 }}
         className="text-center mb-16"
       >
-        <h2 className="text-3xl md:text-4xl uppercase tracking-[0.2em] font-light text-stone-900 dark:text-white mb-6">
+        <h2 className="text-3xl md:text-4xl uppercase tracking-[0.2em] font-light text-stone-900 mb-6">
           Portfolio Gallery
         </h2>
-        <p className="text-stone-600 dark:text-stone-400 max-w-2xl mx-auto font-light">
+        <p className="text-stone-600 max-w-2xl mx-auto font-light">
           A showcase of recent work, custom designs, and artistic nail sets.
         </p>
       </motion.div>
@@ -239,7 +225,7 @@ function Gallery() {
             href="https://www.instagram.com/nails.bykaela/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-stone-600 dark:text-stone-400 hover:text-black dark:hover:text-white font-medium transition inline-flex items-center gap-2 text-sm md:text-base"
+            className="text-stone-600 hover:text-black font-medium transition inline-flex items-center gap-2 text-sm md:text-base"
           >
             <Instagram className="w-5 h-5" />
             Follow @nails.bykaela on Instagram
@@ -303,7 +289,7 @@ function Gallery() {
             ></blockquote>
           </div>
           <div className="flex justify-center">
-            <div className="w-full max-w-[540px] min-w-[280px] aspect-square bg-stone-100 dark:bg-stone-800 rounded-2xl flex items-center justify-center border-2 border-dashed border-stone-200 dark:border-stone-700">
+            <div className="w-full max-w-[540px] min-w-[280px] aspect-square bg-stone-100 rounded-2xl flex items-center justify-center border-2 border-dashed border-stone-200">
               <p className="text-stone-400 uppercase tracking-widest text-xs">More coming soon</p>
             </div>
           </div>
@@ -342,17 +328,17 @@ function Services() {
   ];
 
   return (
-    <section className="py-20 md:py-32 bg-white dark:bg-stone-900">
+    <section className="py-20 md:py-32 bg-white">
       <div className="max-w-4xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl uppercase tracking-[0.2em] font-light text-stone-900 dark:text-white mb-6">
+          <h2 className="text-3xl md:text-4xl uppercase tracking-[0.2em] font-light text-stone-900 mb-6">
             Services Menu
           </h2>
-          <p className="text-stone-600 dark:text-stone-400 font-light">
+          <p className="text-stone-600 font-light">
             Professional nail care and artistic designs tailored to your style.
           </p>
         </motion.div>
@@ -360,24 +346,24 @@ function Services() {
         <div className="space-y-16">
           {categories.map((cat) => (
             <div key={cat.name}>
-              <h3 className="text-lg uppercase tracking-[0.3em] font-medium text-stone-400 dark:text-stone-500 mb-8 border-b border-stone-100 dark:border-stone-800 pb-2">
+              <h3 className="text-lg uppercase tracking-[0.3em] font-medium text-stone-400 mb-8 border-b border-stone-100 pb-2">
                 {cat.name}
               </h3>
               <div className="space-y-6">
                 {cat.items.map((service) => (
                   <div
                     key={service.title}
-                    className="flex flex-col sm:flex-row justify-between sm:items-center p-6 hover:bg-stone-50 dark:hover:bg-stone-950 transition rounded-2xl group"
+                    className="flex flex-col sm:flex-row justify-between sm:items-center p-6 hover:bg-stone-50 transition rounded-2xl group"
                   >
                     <div className="mb-4 sm:mb-0">
-                      <h4 className="uppercase tracking-widest text-sm font-medium text-stone-800 dark:text-stone-200 group-hover:text-black dark:group-hover:text-white transition">
+                      <h4 className="uppercase tracking-widest text-sm font-medium text-stone-800 group-hover:text-black transition">
                         {service.title}
                       </h4>
-                      <p className="text-sm text-stone-500 dark:text-stone-400 font-light mt-1 max-w-md">
+                      <p className="text-sm text-stone-500 font-light mt-1 max-w-md">
                         {service.desc}
                       </p>
                     </div>
-                    <span className="font-medium text-black dark:text-white text-lg">{service.price}</span>
+                    <span className="font-medium text-black text-lg">{service.price}</span>
                   </div>
                 ))}
               </div>
@@ -390,7 +376,7 @@ function Services() {
             href="https://book.squareup.com/appointments/7gfoi8huvotqzg/location/L0A6KM278AF3H/services"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-black dark:bg-white text-white dark:text-black px-12 py-4 rounded-full uppercase tracking-widest text-sm font-medium hover:bg-stone-800 dark:hover:bg-stone-200 transition shadow-xl inline-block"
+            className="bg-black text-white px-12 py-4 rounded-full uppercase tracking-widest text-sm font-medium hover:bg-stone-800 transition shadow-xl inline-block"
           >
             Book Your Session
           </a>
@@ -408,17 +394,17 @@ function Contact() {
         animate={{ opacity: 1 }}
         className="text-center mb-16"
       >
-        <h2 className="text-3xl md:text-4xl uppercase tracking-[0.2em] font-light text-stone-900 dark:text-white mb-6">
+        <h2 className="text-3xl md:text-4xl uppercase tracking-[0.2em] font-light text-stone-900 mb-6">
           Get In Touch
         </h2>
-        <p className="text-stone-600 dark:text-stone-400 font-light">
+        <p className="text-stone-600 font-light">
           Have questions or want to discuss a custom design? I'd love to hear from you.
         </p>
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-        <div className="bg-white dark:bg-stone-950 p-10 rounded-3xl shadow-sm border border-stone-100 dark:border-stone-800">
-          <h3 className="text-xl uppercase tracking-widest font-light mb-8 text-stone-900 dark:text-white">
+        <div className="bg-white p-10 rounded-3xl shadow-sm border border-stone-100">
+          <h3 className="text-xl uppercase tracking-widest font-light mb-8 text-stone-900">
             Contact Info
           </h3>
           <div className="space-y-8">
@@ -428,7 +414,7 @@ function Contact() {
                 href="https://www.google.com/maps/search/?api=1&query=1904+E+75+S+Layton+UT+84040" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-stone-800 dark:text-stone-200 font-light hover:text-black dark:hover:text-white transition underline decoration-stone-300 underline-offset-4"
+                className="text-stone-800 font-light hover:text-black transition underline decoration-stone-300 underline-offset-4"
               >
                 Located in the heart of Layton.
               </a>
@@ -437,16 +423,16 @@ function Contact() {
               <p className="uppercase tracking-widest text-[10px] text-stone-400 mb-1">Instagram</p>
               <a
                 href="https://www.instagram.com/nails.bykaela/"
-                target="_blank"
+                target="_blank" 
                 rel="noopener noreferrer"
-                className="text-stone-800 dark:text-stone-200 font-light hover:text-black dark:hover:text-white transition"
+                className="text-stone-800 font-light hover:text-black transition"
               >
                 @nails.bykaela
               </a>
             </div>
             <div>
               <p className="uppercase tracking-widest text-[10px] text-stone-400 mb-1">Booking</p>
-              <p className="text-stone-800 dark:text-stone-200 font-light">Exclusively through Square Appointments.</p>
+              <p className="text-stone-800 font-light">Exclusively through Square Appointments.</p>
             </div>
           </div>
         </div>
@@ -490,47 +476,9 @@ function Contact() {
 // --- Main App ---
 
 export default function App() {
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    // Check local storage or default to light mode
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("darkMode");
-      if (saved !== null) return saved === "true";
-      // Default to light mode as requested
-      return false;
-    }
-    return false;
-  });
-
-  useEffect(() => {
-    // Apply dark mode class to html element
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-    localStorage.setItem("darkMode", isDarkMode.toString());
-  }, [isDarkMode]);
-
-  // Support for Dark Reader: Detect if it's active
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      const isDarkReaderActive = document.documentElement.hasAttribute("data-darkreader-scheme") ||
-                                document.documentElement.hasAttribute("data-darkreader-mode");
-      if (isDarkReaderActive) {
-        // If Dark Reader is active, we might want to disable our own toggle or sync with it
-        // For now, we just ensure our classes don't conflict
-      }
-    });
-
-    observer.observe(document.documentElement, { attributes: true });
-    return () => observer.disconnect();
-  }, []);
-
-  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
-
   return (
     <BrowserRouter>
-      <Layout toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode}>
+      <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/gallery" element={<Gallery />} />
